@@ -13,7 +13,7 @@ public class GameOverPopup : MonoBehaviour
 
     private void RestartGame()
     {
-        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameStateService.Instance.StartGameplay();
     }
 }

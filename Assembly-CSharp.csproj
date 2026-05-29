@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\Pool\PoolableObject.cs" />
     <Compile Include="Assets\Scripts\TowerSpells\Fireball\BurnEffect.cs" />
     <Compile Include="Assets\Scripts\SpawnService.cs" />
+    <Compile Include="Assets\Scripts\GameStateService.cs" />
     <Compile Include="Assets\Scripts\Configs\TowerConfig.cs" />
     <Compile Include="Assets\Scripts\Tools\EnumHelper.cs" />
     <Compile Include="Assets\Scripts\TowerSpells\Barrage\BarrageProjectile.cs" />

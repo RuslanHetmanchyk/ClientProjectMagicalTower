@@ -12,18 +12,31 @@ public class GameplayHUD : MonoBehaviour
 
     void Start()
     {
+        GameStateService.Instance.OnGameStateChanged += HandleGameStateChanged;
         towerService.OnHealthChanged += UpdateHealthBar;
-        towerService.OnGameOver += ShowGameOverScreen;
-        
-        healthBarSlider.maxValue = towerService.MaxHealth;
-        
-        UpdateHealthBar(towerService.CurrentHealth, towerService.MaxHealth);
 
         gameOverPanel.SetActive(false);
     }
 
+    void OnDestroy()
+    {
+        GameStateService.Instance.OnGameStateChanged -= HandleGameStateChanged;
+        towerService.OnHealthChanged -= UpdateHealthBar;
+    }
+
+    private void HandleGameStateChanged(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.Lose:
+                ShowGameOverScreen();
+                break;
+        }
+    }
+
     private void UpdateHealthBar(float currentHealth, float maxHealth)
     {
+        healthBarSlider.maxValue = towerService.MaxHealth;
         healthBarSlider.value = currentHealth;
         healthBarFill.color = Color.Lerp(Color.red, Color.green, healthBarFill.fillAmount);
     }
@@ -31,11 +44,5 @@ public class GameplayHUD : MonoBehaviour
     private void ShowGameOverScreen()
     {
         gameOverPanel.SetActive(true);
-    }
-
-    void OnDestroy()
-    {
-        towerService.OnHealthChanged -= UpdateHealthBar;
-        towerService.OnGameOver -= ShowGameOverScreen;
     }
 }

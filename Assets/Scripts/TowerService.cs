@@ -8,7 +8,6 @@ public class TowerService : MonoBehaviour
     [SerializeField] private TowerView towerView;
     
     public event Action<float, float> OnHealthChanged;
-    public event Action OnGameOver;
 
     public TowerView TowerView => towerView;
     public float MaxHealth { get; private set; }
@@ -17,20 +16,35 @@ public class TowerService : MonoBehaviour
 
     private void Start()
     {
-        Init();
-        
+        GameStateService.Instance.OnGameStateChanged += HandleGameStateChanged;
         towerView.OnTakeDamage += TakeDamage;
+        
+        InitHealth();
     }
 
     private void OnDestroy()
     {
+        GameStateService.Instance.OnGameStateChanged -= HandleGameStateChanged;
         towerView.OnTakeDamage -= TakeDamage;
     }
 
-    private void Init()
+    private void HandleGameStateChanged(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.Gameplay:
+                InitHealth();
+                break;
+        }
+    }
+
+    private void InitHealth()
     {
         MaxHealth = config.MaxHealth;
         CurrentHealth = MaxHealth;
+
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+
         IsGameOver = false;
     }
 
@@ -51,15 +65,7 @@ public class TowerService : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            GameOver();
+            GameStateService.Instance.LoseGame();
         }
-    }
-
-    private void GameOver()
-    {
-        IsGameOver = true;
-        Time.timeScale = 0f;
-        
-        OnGameOver?.Invoke();
     }
 }
