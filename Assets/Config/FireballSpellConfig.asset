@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61efdc6555574f758e09dd06351e84c6, type: 3}
+  m_Name: FireballSpellConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Configs.FireballSpellConfig
+  Radius: 20
+  CastIntervalSec: 3
+  Speed: 12
+  MaxLifetimeSec: 5
+  "\u0421ollisionRadius": 0.5
+  ExplosionRadius: 3
+  Damage: 25
+  DurationSec: 5
+  TickRateSec: 1
+  DamagePerTick: 5

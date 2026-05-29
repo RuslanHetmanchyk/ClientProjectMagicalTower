@@ -12,7 +12,7 @@ namespace Pool
 
         private void Awake()
         {
-            for (int i = 0; i < initialSize; i++)
+            for (var i = 0; i < initialSize; i++)
             {
                 CreateObject();
             }
@@ -20,16 +20,13 @@ namespace Pool
 
         private PoolableObject CreateObject()
         {
-            PoolableObject obj =
-                Instantiate(prefab, transform);
+            var poolableObject = Instantiate(prefab, transform);
+            poolableObject.Pool = this;
+            poolableObject.gameObject.SetActive(false);
 
-            obj.Pool = this;
+            pool.Enqueue(poolableObject);
 
-            obj.gameObject.SetActive(false);
-
-            pool.Enqueue(obj);
-
-            return obj;
+            return poolableObject;
         }
 
         public T Get<T>() where T : PoolableObject
@@ -39,21 +36,17 @@ namespace Pool
                 CreateObject();
             }
 
-            PoolableObject obj = pool.Dequeue();
+            var poolableObject = pool.Dequeue();
+            poolableObject.gameObject.SetActive(true);
+            poolableObject.OnSpawn();
 
-            obj.gameObject.SetActive(true);
-
-            obj.OnSpawn();
-
-            return obj as T;
+            return poolableObject as T;
         }
 
         public void Return(PoolableObject obj)
         {
             obj.OnDespawn();
-
             obj.gameObject.SetActive(false);
-
             pool.Enqueue(obj);
         }
     }
