@@ -21,18 +21,13 @@ public class DamageText : PoolableObject
 
     private float timer;
 
-    public void Show(
-        int damage,
-        Vector3 worldPosition)
+    public void Show(int damage, Vector3 worldPosition)
     {
         transform.position = worldPosition;
 
         textMesh.text = $"-{damage}";
 
-        moveDirection = new Vector3(
-            Random.Range(-randomX, randomX),
-            1f + Random.Range(0f, randomY),
-            0f);
+        moveDirection = new Vector3(Random.Range(-randomX, randomX), 1f + Random.Range(0f, randomY), 0f);
 
         timer = 0f;
 
@@ -45,16 +40,12 @@ public class DamageText : PoolableObject
 
     private void Update()
     {
-        transform.position +=
-            moveDirection * moveSpeed * Time.deltaTime;
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
         timer += Time.deltaTime;
 
-        float progress =
-            timer / lifetime;
-
-        textColor.a =
-            Mathf.Lerp(1f, 0f, progress);
+        var progress = timer / lifetime;
+        textColor.a = Mathf.Lerp(1f, 0f, progress);
 
         textMesh.color = textColor;
 

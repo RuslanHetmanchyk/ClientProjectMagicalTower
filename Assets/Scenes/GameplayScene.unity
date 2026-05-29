@@ -1961,6 +1961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0bad1ca5eb465fbf9ba41faf3c6d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerService
+  config: {fileID: 11400000, guid: 323783c5736d24548a11ea5b1c654bcf, type: 2}
   towerView: {fileID: 1522899734}
 --- !u!1 &1968419179
 GameObject:

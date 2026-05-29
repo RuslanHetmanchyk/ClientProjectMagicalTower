@@ -8,6 +8,6 @@ namespace Configs
     public class TowerConfig : ScriptableObject
     {
         [Header("Stats")]
-        public int maxHealth = 100;
+        public int MaxHealth = 100;
     }
 }

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameplayHUD : MonoBehaviour
 {
@@ -23,7 +22,6 @@ public class GameplayHUD : MonoBehaviour
         gameOverPanel.SetActive(false);
     }
 
-    // Тот самый колбэк, который вызывается из сервиса
     private void UpdateHealthBar(float currentHealth, float maxHealth)
     {
         healthBarSlider.value = currentHealth;
@@ -33,12 +31,6 @@ public class GameplayHUD : MonoBehaviour
     private void ShowGameOverScreen()
     {
         gameOverPanel.SetActive(true);
-    }
-
-    public void RestartGame()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void OnDestroy()

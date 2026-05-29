@@ -58,7 +58,7 @@ public class SpawnService : MonoBehaviour
     private void SpawnEnemy()
     {
         var randomEnemyType = EnumHelper.GetRandomEnumValue<EnemyType>();
-        Enemy enemy = enemyPools[randomEnemyType].Get<Enemy>();
+        var enemy = enemyPools[randomEnemyType].Get<Enemy>();
 
         enemy.transform.position = GenerateSpawnPosition();
         enemy.Target = towerService.TowerView;

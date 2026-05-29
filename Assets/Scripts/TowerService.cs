@@ -1,8 +1,10 @@
 ﻿using System;
+using Configs;
 using UnityEngine;
 
 public class TowerService : MonoBehaviour
 {
+    [SerializeField] private TowerConfig config;
     [SerializeField] private TowerView towerView;
     
     public event Action<float, float> OnHealthChanged;
@@ -15,24 +17,36 @@ public class TowerService : MonoBehaviour
 
     private void Start()
     {
-        Init(1000f);
+        Init();
+        
+        towerView.OnTakeDamage += TakeDamage;
     }
 
-    private void Init(float maxHealth)
+    private void OnDestroy()
     {
-        MaxHealth = maxHealth;
-        CurrentHealth = maxHealth;
+        towerView.OnTakeDamage -= TakeDamage;
+    }
+
+    private void Init()
+    {
+        MaxHealth = config.MaxHealth;
+        CurrentHealth = MaxHealth;
         IsGameOver = false;
     }
 
     public void TakeDamage(float damage)
     {
-        if (IsGameOver) return;
+        if (IsGameOver)
+        {
+            return;
+        }
 
         CurrentHealth -= damage;
-        if (CurrentHealth < 0) CurrentHealth = 0;
+        if (CurrentHealth < 0)
+        {
+            CurrentHealth = 0;
+        }
 
-        // Вызываем колбэк, если на него кто-то подписался
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
 
         if (CurrentHealth <= 0)
@@ -44,6 +58,8 @@ public class TowerService : MonoBehaviour
     private void GameOver()
     {
         IsGameOver = true;
+        Time.timeScale = 0f;
+        
         OnGameOver?.Invoke();
     }
 }

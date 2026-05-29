@@ -20,10 +20,13 @@ public class Enemy : PoolableObject
 
     void Update()
     {
-        if (Target == null) return;
+        if (Target == null)
+        {
+            return;
+        }
 
-        Vector3 targetPosition = new Vector3(Target.transform.position.x, 0.0f, Target.transform.position.z);
-        float distance = Vector3.Distance(transform.position, targetPosition);
+        var targetPosition = new Vector3(Target.transform.position.x, 0.0f, Target.transform.position.z);
+        var distance = Vector3.Distance(transform.position, targetPosition);
 
         if (distance > attackDistance)
         {
@@ -48,14 +51,12 @@ public class Enemy : PoolableObject
 
     private void MoveToTarget(Vector3 targetPos)
     {
-        // Поворот в сторону башни
-        Vector3 direction = (targetPos - transform.position).normalized;
+        var direction = (targetPos - transform.position).normalized;
         if (direction != Vector3.zero)
         {
             transform.forward = direction;
         }
 
-        // Движение вперед
         transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
     }
 
@@ -63,7 +64,6 @@ public class Enemy : PoolableObject
     {
         if (Time.time >= nextAttackTime && Target != null)
         {
-            // Вызываем урон у View, а View передаст его в Service
             Target.TakeDamage(attackDamage);
             nextAttackTime = Time.time + attackCooldown; 
         }
@@ -71,13 +71,11 @@ public class Enemy : PoolableObject
     
     public void TakeDamage(float damage)
     {
-        //if (IsGameOver) return;
-
         currentHealth -= damage;
-        if (currentHealth < 0) currentHealth = 0;
-
-        // Вызываем колбэк, если на него кто-то подписался
-        //OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
 
         if (currentHealth <= 0)
         {
