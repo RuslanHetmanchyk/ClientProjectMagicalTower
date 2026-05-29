@@ -1,6 +1,7 @@
 ﻿using Configs;
-using Pool;
+using Tools.Pool;
 using UnityEngine;
+using View;
 
 namespace TowerSpells.Fireball
 {
@@ -46,7 +47,7 @@ namespace TowerSpells.Fireball
 
             var randomIndex = Random.Range(0, hitCount);
             var targetCollider = overlapResults[randomIndex];
-            if (!targetCollider.TryGetComponent(out Enemy enemy))
+            if (!targetCollider.TryGetComponent(out EnemyView enemy))
             {
                 return;
             }

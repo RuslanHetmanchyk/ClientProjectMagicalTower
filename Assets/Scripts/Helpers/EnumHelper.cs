@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Tools
+namespace Helpers
 {
     public static class EnumHelper
     {

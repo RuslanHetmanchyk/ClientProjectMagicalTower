@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Pool
+namespace Tools.Pool
 {
     public abstract class PoolableObject : MonoBehaviour, IPoolable
     {

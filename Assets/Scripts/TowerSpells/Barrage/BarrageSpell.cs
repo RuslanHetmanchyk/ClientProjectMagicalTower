@@ -1,54 +1,57 @@
 ﻿using Configs;
-using Pool;
-using TowerSpells.Barrage;
+using Tools.Pool;
 using UnityEngine;
+using View;
 
-public class BarrageSpell : MonoBehaviour
+namespace TowerSpells.Barrage
 {
-    [SerializeField] private BarrageSpellConfig config;
-    
-    [Header("Search")]
-    [SerializeField] private LayerMask enemyMask;
-
-    [Header("References")]
-    [SerializeField] private ComponentPool projectilePool;
-    [SerializeField] private Transform shootPoint;
-
-    private float castTimer;
-    
-    private readonly Collider[] overlapResults = new Collider[64];
-
-    private void Update()
+    public class BarrageSpell : MonoBehaviour
     {
-        castTimer += Time.deltaTime;
+        [SerializeField] private BarrageSpellConfig config;
+    
+        [Header("Search")]
+        [SerializeField] private LayerMask enemyMask;
 
-        if (castTimer >= config.CastIntervalSec)
+        [Header("References")]
+        [SerializeField] private ComponentPool projectilePool;
+        [SerializeField] private Transform shootPoint;
+
+        private float castTimer;
+    
+        private readonly Collider[] overlapResults = new Collider[64];
+
+        private void Update()
         {
-            castTimer = 0f;
+            castTimer += Time.deltaTime;
 
-            Cast();
-        }
-    }
-
-    public void Cast()
-    {
-        var hitCount = Physics.OverlapSphereNonAlloc(
-            shootPoint.position,
-            config.Radius,
-            overlapResults,
-            enemyMask);
-
-        for (var i = 0; i < hitCount; i++)
-        {
-            var hit = overlapResults[i];
-            var enemy = hit.GetComponent<Enemy>();
-            if (enemy == null)
+            if (castTimer >= config.CastIntervalSec)
             {
-                continue;
-            }
+                castTimer = 0f;
 
-            var projectile = projectilePool.Get<BarrageProjectile>();
-            projectile.Init(enemy, config.Damage, shootPoint.position);
+                Cast();
+            }
+        }
+
+        private void Cast()
+        {
+            var hitCount = Physics.OverlapSphereNonAlloc(
+                shootPoint.position,
+                config.Radius,
+                overlapResults,
+                enemyMask);
+
+            for (var i = 0; i < hitCount; i++)
+            {
+                var hit = overlapResults[i];
+                var enemy = hit.GetComponent<EnemyView>();
+                if (enemy == null)
+                {
+                    continue;
+                }
+
+                var projectile = projectilePool.Get<BarrageProjectile>();
+                projectile.Init(enemy, config.Damage, shootPoint.position);
+            }
         }
     }
 }

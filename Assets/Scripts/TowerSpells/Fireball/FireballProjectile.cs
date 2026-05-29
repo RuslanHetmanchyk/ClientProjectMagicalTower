@@ -1,5 +1,6 @@
-﻿using Pool;
+﻿using Tools.Pool;
 using UnityEngine;
+using View;
 
 namespace TowerSpells.Fireball
 {
@@ -75,7 +76,7 @@ namespace TowerSpells.Fireball
             for (var i = 0; i < hitCount; i++)
             {
                 var hit = overlapResults[i];
-                if (!hit.TryGetComponent(out Enemy enemy))
+                if (!hit.TryGetComponent(out EnemyView enemy))
                 {
                     continue;
                 }
@@ -88,15 +89,15 @@ namespace TowerSpells.Fireball
             ReturnToPool();
         }
 
-        private void ApplyBurn(Enemy enemy)
+        private void ApplyBurn(EnemyView enemyView)
         {
-            var burnEffect = enemy.GetComponent<BurnEffect>();
+            var burnEffect = enemyView.GetComponent<BurnEffect>();
             if (burnEffect == null)
             {
-                burnEffect = enemy.gameObject.AddComponent<BurnEffect>();
+                burnEffect = enemyView.gameObject.AddComponent<BurnEffect>();
             }
 
-            burnEffect.Init(enemy, BurnDurationSec, BurnTickRate, DamagePerTick);
+            burnEffect.Init(enemyView, BurnDurationSec, BurnTickRate, DamagePerTick);
         }
 
         public override void OnSpawn()

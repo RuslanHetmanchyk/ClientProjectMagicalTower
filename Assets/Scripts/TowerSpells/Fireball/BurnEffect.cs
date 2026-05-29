@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using View;
 
 namespace TowerSpells.Fireball
 {
     public class BurnEffect : MonoBehaviour
     {
-        private Enemy enemy;
+        private EnemyView enemyView;
 
         private float duration;
         private float tickRate;
@@ -14,9 +15,9 @@ namespace TowerSpells.Fireball
         private float durationTimer;
         private float tickTimer;
 
-        public void Init(Enemy target, float burnDuration, float burnTickInterval, float burnTickDamage)
+        public void Init(EnemyView target, float burnDuration, float burnTickInterval, float burnTickDamage)
         {
-            enemy = target;
+            enemyView = target;
 
             duration = burnDuration;
             tickRate = burnTickInterval;
@@ -28,7 +29,7 @@ namespace TowerSpells.Fireball
 
         private void Update()
         {
-            if (enemy == null)
+            if (enemyView == null)
             {
                 Destroy(this);
                 return;
@@ -41,7 +42,7 @@ namespace TowerSpells.Fireball
             {
                 tickTimer = 0f;
 
-                enemy.TakeDamage(damage);
+                enemyView.TakeDamage(damage);
             }
 
             if (durationTimer >= duration)

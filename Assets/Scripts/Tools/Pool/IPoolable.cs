@@ -1,4 +1,4 @@
-﻿namespace Pool
+﻿namespace Tools.Pool
 {
     public interface IPoolable
     {

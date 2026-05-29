@@ -1,5 +1,6 @@
-﻿using Pool;
+﻿using Tools.Pool;
 using UnityEngine;
+using View;
 
 namespace TowerSpells.Barrage
 {
@@ -8,15 +9,15 @@ namespace TowerSpells.Barrage
         [SerializeField] private float flightTime = 0.5f;
         [SerializeField] private float arcHeight = 4.0f;
 
-        private Enemy target;
+        private EnemyView target;
         private int damage;
 
         private Vector3 startPos;
         private float timer;
 
-        public void Init(Enemy enemy, int damageValue, Vector3 spawnPosition)
+        public void Init(EnemyView enemyView, int damageValue, Vector3 spawnPosition)
         {
-            target = enemy;
+            target = enemyView;
             damage = damageValue;
             startPos = spawnPosition;
 

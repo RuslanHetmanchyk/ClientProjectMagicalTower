@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b757325397bd4c4890a3ca4d1b55bbe0, type: 3}
   m_Name: TowerConfig
   m_EditorClassIdentifier: Assembly-CSharp::Configs.TowerConfig
-  MaxHealth: 1000
+  MaxHealth: 100
