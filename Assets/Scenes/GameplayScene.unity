@@ -1502,14 +1502,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539fc99bf8654d8f8d65a26447c2f85a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BarrageSpell
-  radius: 15
+  config: {fileID: 11400000, guid: f6ce9aae1d480fd4197a4c8d81e5dba0, type: 2}
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
   projectilePool: {fileID: 1245267558}
   shootPoint: {fileID: 2129814302}
-  damage: 10
-  castInterval: 2
 --- !u!114 &1245267558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2173,13 +2171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23edc3877bbb42949daf3bb5ebb5e33f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerSpells.Fireball.FireballSpell
-  radius: 20
+  config: {fileID: 11400000, guid: f070b2a714a341444b37b48bee53e520, type: 2}
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
   projectilePool: {fileID: 2056782571}
   shootPoint: {fileID: 2129814302}
-  castInterval: 3
 --- !u!1 &2100398426
 GameObject:
   m_ObjectHideFlags: 0

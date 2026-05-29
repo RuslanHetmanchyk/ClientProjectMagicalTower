@@ -10,10 +10,10 @@ namespace Configs
         [Header("Search")]
         public float Radius = 12f;
 
-        [Header("Damage")]
-        public int Damage = 10;
-
         [Header("Cast")]
         public float CastIntervalSec = 2f;
+
+        [Header("Damage")]
+        public int Damage = 10;
     }
 }

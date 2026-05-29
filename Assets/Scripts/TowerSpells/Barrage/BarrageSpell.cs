@@ -1,22 +1,18 @@
-﻿using Pool;
+﻿using Configs;
+using Pool;
 using TowerSpells.Barrage;
 using UnityEngine;
 
 public class BarrageSpell : MonoBehaviour
 {
+    [SerializeField] private BarrageSpellConfig config;
+    
     [Header("Search")]
-    [SerializeField] private float radius = 6f;
     [SerializeField] private LayerMask enemyMask;
 
     [Header("References")]
     [SerializeField] private ComponentPool projectilePool;
     [SerializeField] private Transform shootPoint;
-
-    [Header("Damage")]
-    [SerializeField] private int damage = 10;
-    
-    [Header("Cast")]
-    [SerializeField] private float castInterval = 2f;
 
     private float castTimer;
     
@@ -26,7 +22,7 @@ public class BarrageSpell : MonoBehaviour
     {
         castTimer += Time.deltaTime;
 
-        if (castTimer >= castInterval)
+        if (castTimer >= config.CastIntervalSec)
         {
             castTimer = 0f;
 
@@ -38,7 +34,7 @@ public class BarrageSpell : MonoBehaviour
     {
         int hitCount = Physics.OverlapSphereNonAlloc(
             shootPoint.position,
-            radius,
+            config.Radius,
             overlapResults,
             enemyMask);
 
@@ -56,7 +52,7 @@ public class BarrageSpell : MonoBehaviour
 
             projectile.Init(
                 enemy,
-                damage,
+                config.Damage,
                 shootPoint.position);
         }
     }

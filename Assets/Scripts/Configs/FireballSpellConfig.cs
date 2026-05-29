@@ -11,28 +11,22 @@ namespace Configs
         public float Radius = 10f;
 
         [Header("Cast")]
-        public float CastIntervalSec = 3f;
+        public float CastIntervalSec = 3.0f;
 
         [Header("Movement")]
-        public float Speed = 12f;
-
-        public float MaxLifetimeSec = 5f;
+        public float Speed = 12.0f;
+        public float MaxLifetimeSec = 5.0f;
 
         [Header("Collision")]
         public float СollisionRadius = 1.0f;
 
         [Header("Explosion")]
-        public float ExplosionRadius = 3f;
+        public float Damage = 25.0f;
+        public float ExplosionRadius = 3.0f;
 
-        public int Damage = 25;
-
-        [Header("BurnDuration")]
-        public float DurationSec = 5f;
-
-        [Header("BurnTick")]
-        public float TickRateSec = 1f;
-
-        [Header("BurnDamage")]
-        public int DamagePerTick = 5;
+        [Header("Burn")]
+        public float DurationSec = 5.0f;
+        public float TickRateSec = 1.0f;
+        public float DamagePerTick = 5.0f;
     }
 }

@@ -9,7 +9,7 @@ namespace TowerSpells.Fireball
         private float duration;
         private float tickRate;
 
-        private int damage;
+        private float damage;
 
         private float durationTimer;
         private float tickTimer;
@@ -18,7 +18,7 @@ namespace TowerSpells.Fireball
             Enemy target,
             float burnDuration,
             float burnTickInterval,
-            int burnTickDamage)
+            float burnTickDamage)
         {
             enemy = target;
 

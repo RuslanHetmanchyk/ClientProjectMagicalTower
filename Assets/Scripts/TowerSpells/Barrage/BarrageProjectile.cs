@@ -5,8 +5,8 @@ namespace TowerSpells.Barrage
 {
     public class BarrageProjectile : PoolableObject
     {
-        [SerializeField] private float flightTime = 0.6f;
-        [SerializeField] private float arcHeight = 2f;
+        [SerializeField] private float flightTime = 0.5f;
+        [SerializeField] private float arcHeight = 4.0f;
 
         private Enemy target;
         private int damage;

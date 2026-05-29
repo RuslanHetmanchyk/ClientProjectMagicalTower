@@ -5,26 +5,19 @@ namespace TowerSpells.Fireball
 {
     public class FireballProjectile : PoolableObject
     {
-        [Header("Movement")]
-        [SerializeField] private float speed = 12f;
-        [SerializeField] private float maxLifetime = 5f;
-
-        [Header("Collision")]
-        [SerializeField] private float collisionRadius = 0.3f;
         [SerializeField] private LayerMask collisionMask;
-
-        [Header("Explosion")]
-        [SerializeField] private float explosionRadius = 4f;
         [SerializeField] private LayerMask enemyMask;
-        [SerializeField] private int damage = 25;
 
-        [Header("Burn")]
-        [SerializeField] private float burnDuration = 4f;
-        [SerializeField] private float burnTickRate = 1f;
-        [SerializeField] private int burnDamage = 5;
+        public float MoveSpeed { get; set; } = 12f;
+        public float MaxLifetimeSec { get; set; } = 5.0f;
+        public float CollisionRadius { get; set; } = 0.3f;
+        public float ExplosionRadius { get; set; } = 4.0f;
+        public float Damage { get; set; } = 25.0f;
+        public float BurnDurationSec { get; set; } = 4.0f;
+        public float BurnTickRate { get; set; } = 1.0f;
+        public float DamagePerTick { get; set; } = 5.0f;
 
-        private readonly Collider[] overlapResults =
-            new Collider[32];
+        private readonly Collider[] overlapResults = new Collider[32];
 
         private Vector3 direction;
 
@@ -45,15 +38,11 @@ namespace TowerSpells.Fireball
 
         private void Update()
         {
-            float moveDistance =
-                speed * Time.deltaTime;
-
-            Vector3 currentPosition =
-                transform.position;
-
-            bool hit = Physics.SphereCast(
+            var moveDistance = MoveSpeed * Time.deltaTime;
+            var currentPosition = transform.position;
+            var hit = Physics.SphereCast(
                 currentPosition,
-                collisionRadius,
+                CollisionRadius,
                 direction,
                 out RaycastHit hitInfo,
                 moveDistance,
@@ -68,14 +57,11 @@ namespace TowerSpells.Fireball
                 return;
             }
 
-            transform.position +=
-                direction * moveDistance;
-
+            transform.position += direction * moveDistance;
             transform.forward = direction;
 
             timer += Time.deltaTime;
-
-            if (timer >= maxLifetime)
+            if (timer >= MaxLifetimeSec)
             {
                 ReturnToPool();
             }
@@ -83,21 +69,21 @@ namespace TowerSpells.Fireball
 
         private void Explode()
         {
-            int hitCount = Physics.OverlapSphereNonAlloc(
+            var hitCount = Physics.OverlapSphereNonAlloc(
                 transform.position,
-                explosionRadius,
+                ExplosionRadius,
                 overlapResults,
                 enemyMask);
 
-            for (int i = 0; i < hitCount; i++)
+            for (var i = 0; i < hitCount; i++)
             {
-                Collider hit =
-                    overlapResults[i];
-
+                var hit = overlapResults[i];
                 if (!hit.TryGetComponent(out Enemy enemy))
+                {
                     continue;
+                }
 
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(Damage);
 
                 ApplyBurn(enemy);
             }
@@ -107,21 +93,13 @@ namespace TowerSpells.Fireball
 
         private void ApplyBurn(Enemy enemy)
         {
-            BurnEffect burn =
-                enemy.GetComponent<BurnEffect>();
-
-            if (burn == null)
+            var burnEffect = enemy.GetComponent<BurnEffect>();
+            if (burnEffect == null)
             {
-                burn =
-                    enemy.gameObject
-                        .AddComponent<BurnEffect>();
+                burnEffect = enemy.gameObject.AddComponent<BurnEffect>();
             }
 
-            burn.Init(
-                enemy,
-                burnDuration,
-                burnTickRate,
-                burnDamage);
+            burnEffect.Init(enemy, BurnDurationSec, BurnTickRate, DamagePerTick);
         }
 
         public override void OnSpawn()
@@ -130,15 +108,6 @@ namespace TowerSpells.Fireball
 
         public override void OnDespawn()
         {
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-
-            Gizmos.DrawWireSphere(
-                transform.position,
-                explosionRadius);
         }
     }
 }

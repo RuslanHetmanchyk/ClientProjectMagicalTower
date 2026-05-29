@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Configs;
 using Pool;
 using Tools;
 using Random = UnityEngine.Random;

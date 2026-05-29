@@ -1,20 +1,19 @@
-﻿using Pool;
+﻿using Configs;
+using Pool;
 using UnityEngine;
 
 namespace TowerSpells.Fireball
 {
     public class FireballSpell : MonoBehaviour
     {
+        [SerializeField] private FireballSpellConfig config;    
+        
         [Header("Search")]
-        [SerializeField] private float radius = 10f;
         [SerializeField] private LayerMask enemyMask;
 
         [Header("References")]
         [SerializeField] private ComponentPool projectilePool;
         [SerializeField] private Transform shootPoint;
-
-        [Header("Cast")]
-        [SerializeField] private float castInterval = 3f;
 
         private readonly Collider[] overlapResults = new Collider[64];
 
@@ -24,7 +23,7 @@ namespace TowerSpells.Fireball
         {
             timer += Time.deltaTime;
 
-            if (timer >= castInterval)
+            if (timer >= config.CastIntervalSec)
             {
                 timer = 0f;
 
@@ -34,39 +33,38 @@ namespace TowerSpells.Fireball
 
         private void Cast()
         {
-            int hitCount = Physics.OverlapSphereNonAlloc(
+            var hitCount = Physics.OverlapSphereNonAlloc(
                 shootPoint.position,
-                radius,
+                config.Radius,
                 overlapResults,
                 enemyMask);
 
             if (hitCount == 0)
-                return;
-
-            int randomIndex =
-                Random.Range(0, hitCount);
-
-            Collider targetCollider =
-                overlapResults[randomIndex];
-
-            if (!targetCollider.TryGetComponent(
-                    out Enemy enemy))
             {
                 return;
             }
 
-            Vector3 direction =
-                (enemy.transform.position - shootPoint.position)
-                .normalized;
+            var randomIndex = Random.Range(0, hitCount);
+            var targetCollider = overlapResults[randomIndex];
+            if (!targetCollider.TryGetComponent(out Enemy enemy))
+            {
+                return;
+            }
 
+            var direction = (enemy.transform.position - shootPoint.position).normalized;
             direction.Normalize();
 
-            FireballProjectile projectile =
-                projectilePool.Get<FireballProjectile>();
-
-            projectile.Launch(
-                shootPoint.position,
-                direction);
+            var projectile = projectilePool.Get<FireballProjectile>();
+            projectile.MoveSpeed = config.Speed;
+            projectile.MaxLifetimeSec = config.MaxLifetimeSec;
+            projectile.CollisionRadius = config.СollisionRadius;
+            projectile.ExplosionRadius = config.ExplosionRadius;
+            projectile.Damage = config.Damage;
+            projectile.BurnDurationSec = config.DurationSec;
+            projectile.BurnTickRate = config.TickRateSec;
+            projectile.DamagePerTick = config.DamagePerTick;
+            
+            projectile.Launch(shootPoint.position, direction);
         }
     }
 }
