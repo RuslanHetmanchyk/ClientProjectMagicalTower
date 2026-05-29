@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Configs\TowerConfig.cs" />
     <Compile Include="Assets\Scripts\TowerSpells\Barrage\BarrageProjectile.cs" />
     <Compile Include="Assets\Scripts\Tools\LookAtCamera.cs" />
+    <Compile Include="Assets\Scripts\UI\EnemyInfoUI.cs" />
     <Compile Include="Assets\Scripts\Tools\Pool\PoolableObject.cs" />
     <Compile Include="Assets\Scripts\View\EnemyView.cs" />
     <Compile Include="Assets\Scripts\UI\GameplayHUD.cs" />

@@ -1,25 +1,22 @@
-using TMPro;
 using Tools.Pool;
-using UI;
 using UnityEngine;
 
 namespace View
 {
     public class EnemyView : PoolableObject
     {
-        [SerializeField] private TextMeshPro healthText;
-        [SerializeField] private ComponentPool damageTextPool;
+        [SerializeField] private EnemyInfoUI enemyInfoUI;
     
-        private float moveSpeed = 3f;
-        private float attackDamage = 10f;
-        private float attackDistance = 2.5f;
-        private float attackCooldown = 2f;
-        private float maxHealth = 100f;
-    
-        public TowerView Target { get; set; }
+        private float moveSpeed;
+        private float attackDamage;
+        private float attackDistance;
+        private float attackCooldown;
+        private float maxHealth;
 
         private float nextAttackTime;
         private float currentHealth;
+
+        public TowerView Target { get; set; }
 
         void Update()
         {
@@ -84,21 +81,11 @@ namespace View
             {
                 Destroy(gameObject);
             }
-
-            healthText.text = $"{currentHealth}/{maxHealth}";
-        
-            ShowDamage((int)damage, transform.position);
+            
+            enemyInfoUI.SetHealth(currentHealth, maxHealth);
+            enemyInfoUI.ShowDamage((int)damage, transform.position);
         }
     
-        [SerializeField] private Vector3 offset =
-            new Vector3(0f, 1.5f, 0f);
-        public void ShowDamage(int damage, Vector3 worldPosition)
-        {
-            var damageText = damageTextPool.Get<DamageText>();
-
-            damageText.Show(damage, worldPosition + offset);
-        }
-
         public override void OnSpawn()
         {
         }
