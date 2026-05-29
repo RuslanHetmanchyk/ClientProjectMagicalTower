@@ -32,28 +32,23 @@ public class BarrageSpell : MonoBehaviour
 
     public void Cast()
     {
-        int hitCount = Physics.OverlapSphereNonAlloc(
+        var hitCount = Physics.OverlapSphereNonAlloc(
             shootPoint.position,
             config.Radius,
             overlapResults,
             enemyMask);
 
-        for (int i = 0; i < hitCount; i++)
+        for (var i = 0; i < hitCount; i++)
         {
-            Collider hit = overlapResults[i];
-
-            Enemy enemy = hit.GetComponent<Enemy>();
-
+            var hit = overlapResults[i];
+            var enemy = hit.GetComponent<Enemy>();
             if (enemy == null)
+            {
                 continue;
+            }
 
-            BarrageProjectile projectile =
-                projectilePool.Get<BarrageProjectile>();
-
-            projectile.Init(
-                enemy,
-                config.Damage,
-                shootPoint.position);
+            var projectile = projectilePool.Get<BarrageProjectile>();
+            projectile.Init(enemy, config.Damage, shootPoint.position);
         }
     }
 }

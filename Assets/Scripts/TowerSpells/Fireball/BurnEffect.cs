@@ -14,11 +14,7 @@ namespace TowerSpells.Fireball
         private float durationTimer;
         private float tickTimer;
 
-        public void Init(
-            Enemy target,
-            float burnDuration,
-            float burnTickInterval,
-            float burnTickDamage)
+        public void Init(Enemy target, float burnDuration, float burnTickInterval, float burnTickDamage)
         {
             enemy = target;
 

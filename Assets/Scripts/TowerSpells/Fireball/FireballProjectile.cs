@@ -23,12 +23,9 @@ namespace TowerSpells.Fireball
 
         private float timer;
 
-        public void Launch(
-            Vector3 startPosition,
-            Vector3 moveDirection)
+        public void Launch(Vector3 startPosition, Vector3 moveDirection)
         {
             transform.position = startPosition;
-
             direction = moveDirection.normalized;
 
             timer = 0f;

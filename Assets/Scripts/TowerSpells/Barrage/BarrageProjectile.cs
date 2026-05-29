@@ -14,14 +14,10 @@ namespace TowerSpells.Barrage
         private Vector3 startPos;
         private float timer;
 
-        public void Init(
-            Enemy enemy,
-            int damageValue,
-            Vector3 spawnPosition)
+        public void Init(Enemy enemy, int damageValue, Vector3 spawnPosition)
         {
             target = enemy;
             damage = damageValue;
-
             startPos = spawnPosition;
 
             transform.position = spawnPosition;
@@ -39,7 +35,7 @@ namespace TowerSpells.Barrage
 
             timer += Time.deltaTime;
 
-            float progress = timer / flightTime;
+            var progress = timer / flightTime;
 
             if (progress >= 1f)
             {
@@ -47,11 +43,8 @@ namespace TowerSpells.Barrage
                 return;
             }
 
-            Vector3 targetPos = target.transform.position;
-
-            Vector3 position =
-                Vector3.Lerp(startPos, targetPos, progress);
-
+            var targetPos = target.transform.position;
+            var position = Vector3.Lerp(startPos, targetPos, progress);
             position.y += Mathf.Sin(progress * Mathf.PI) * arcHeight;
 
             transform.position = position;
@@ -61,7 +54,6 @@ namespace TowerSpells.Barrage
         {
             if (target != null)
             {
-                Debug.Log($"HitTarget - {target.name}");
                 target.TakeDamage(damage);
             }
 
